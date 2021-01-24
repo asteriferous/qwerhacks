@@ -128,6 +128,7 @@ public class Main {
             }
             indices.add(index);
             Point p = pointset.get(index);
+            StdDraw.text(p.x, p.y - 1, String.valueOf(index));
             StdDraw.text(p.x, p.y + 1, w.wordLanguage); //x, y coordinates
             StdDraw.setPenColor(Color.orange);
             StdDraw.setFont(smallFont);
@@ -143,6 +144,7 @@ public class Main {
             }
             indices.add(index);
             p = pointset.get(index);
+            StdDraw.text(p.x, p.y - 1, String.valueOf(index));
             StdDraw.text(p.x, p.y, w.wordEnglish);
             f = new flashcard(true, w);
             s.put(p, f);
@@ -190,9 +192,14 @@ public class Main {
         StdDraw.setFont(normalFont);
         // can put our names here
         StdDraw.text(WIDTH / 2, HEIGHT - 9, "QWERHacks Team 24");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2 + 4, "*LEARN MODE*");
         StdDraw.text(WIDTH / 2, HEIGHT / 2 + 2, "New Game (N)");
-        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 2, "Quit Game (Q)");
-        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 6, "Instructions (I)");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2, "Quit Game (Q)");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 2, "Instructions (I)");
+        
+        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 8, "*LIBRARY MODE*");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 10, "Access Library (A)");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 12, "Search (S)");
 
         StdDraw.show();
     }
@@ -273,8 +280,11 @@ public class Main {
             if (StdDraw.hasNextKeyTyped()) {
                 key = Character.toLowerCase(StdDraw.nextKeyTyped());
                 // do something
-                int i = key; // or whatever char->int is
-                Point p = pointset.get(i+1);
+                
+                int i = Character.getNumericValue(key); // pulls value of char key
+                System.out.println(i);
+                
+                Point p = pointset.get(i);
                 if (pointflashcard.get(p).solved) {
                     continue;
                 }
@@ -284,25 +294,8 @@ public class Main {
                 StdDraw.show();
             }
 
-            // option 2: mouseeclicking. if this one, math-ing necessary so it clicks the
-            // right flashcard. possible, just kinda tedious calculating
-            // also you need to mess around with mouseClicked which cannot be directly called
-            // to get the coordinates. stack overflow etc, i can't figure this out rn
-            else if (StdDraw.isMousePressed()) {
-                int mouseX = Math.toIntExact(Math.round(StdDraw.mouseX()));
-                int mouseY = Math.toIntExact(Math.round(StdDraw.mouseY()));
-                // detectMouse(mouseX, mouseY); // detectMouse would be the method
-                // that calculates the math part i.e. which point/word they clicked on
 
-                Point p = pointset.get(0); // whatever point was clicked
-                if (pointflashcard.get(p).solved) {
-                    continue;
-                }
-                updateFlashcard(p);
-                selectedCards += 1;
-            }
-
-            // now for the actual 'two cards weere seelected, what now?"
+            // now for the actual 'two cards were selected, what now?"
             if (selectedCards == 2) {
                 selectedCards = 0; //reset it
                 flashcard one = pointflashcard.get(cards[0]);
