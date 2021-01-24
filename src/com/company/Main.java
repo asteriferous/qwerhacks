@@ -147,6 +147,11 @@ public class Main {
             f = new flashcard(true, w);
             s.put(p, f);
         }
+        StdDraw.setFont(smallFont);
+        StdDraw.setPenColor(Color.WHITE);
+        StdDraw.text(WIDTH / 2, HEIGHT - 1, "insert instruction here");
+        StdDraw.text(5, HEIGHT - 1, name + "'s Game");
+
         return s;
     }
 
@@ -276,12 +281,6 @@ public class Main {
                 updateFlashcard(p);
                 cards[selectedCards] = p;
                 selectedCards += 1;
-                StdDraw.setFont(renderFont);
-                StdDraw.setFont(smallFont);
-                StdDraw.setPenColor(Color.WHITE);
-                StdDraw.text(WIDTH / 2, HEIGHT - 1, "insert instruction here");
-                StdDraw.text(5, HEIGHT - 1, name + "'s Game");
-                StdDraw.text(WIDTH - 12, HEIGHT - 1, curr);
                 StdDraw.show();
             }
 
@@ -301,14 +300,6 @@ public class Main {
                 }
                 updateFlashcard(p);
                 selectedCards += 1;
-
-                StdDraw.setFont(renderFont);
-                StdDraw.setFont(smallFont);
-                StdDraw.setPenColor(Color.WHITE);
-                StdDraw.text(WIDTH / 2, HEIGHT - 1, "insert instructino here");
-                StdDraw.text(5, HEIGHT - 1, name + "'s Game");
-                StdDraw.text(WIDTH - 12, HEIGHT - 1, curr);
-                StdDraw.show();
             }
 
             // now for the actual 'two cards weere seelected, what now?"
@@ -344,16 +335,15 @@ public class Main {
     private static void updateFlashcard(Point p) { //highlights in Green
         flashcard f = pointflashcard.get(p);
         word w = f.getW();
+        StdDraw.setPenColor(Color.CYAN);
+        StdDraw.setFont(normalFont);
         if (!f.getEnglish()) {
-            StdDraw.setPenColor(greenColor);
-            StdDraw.setFont(normalFont);
             StdDraw.text(p.x, p.y + 1, w.wordLanguage); //x, y coordinates
             StdDraw.setPenColor(Color.orange);
             StdDraw.setFont(smallFont);
             StdDraw.text(p.x, p.y - 2, w.pronunication); //x, y coordinates
         } else {
-            StdDraw.setPenColor(greenColor);
-            StdDraw.setFont(normalFont);
+
             StdDraw.text(p.x, p.y, w.wordEnglish);
         }
         StdDraw.show();
@@ -362,9 +352,34 @@ public class Main {
 
     private static void successCards(Point p1, Point p2) {
         flashcard f = pointflashcard.get(p1);
+        word w = f.getW();
         f.solved = true;
+
+        StdDraw.setPenColor(greenColor);
+        StdDraw.setFont(normalFont);
+        if (!f.getEnglish()) {
+            StdDraw.text(p1.x, p1.y + 1, w.wordLanguage); //x, y coordinates
+            StdDraw.setPenColor(Color.orange);
+            StdDraw.setFont(smallFont);
+            StdDraw.text(p1.x, p1.y - 2, w.pronunication); //x, y coordinates
+        } else {
+            StdDraw.text(p1.x, p1.y, w.wordEnglish);
+        }
         f = pointflashcard.get(p2);
         f.solved = true;
+        w = f.getW();
+
+        StdDraw.setPenColor(greenColor);
+        StdDraw.setFont(normalFont);
+        if (!f.getEnglish()) {
+            StdDraw.text(p2.x, p2.y + 1, w.wordLanguage); //x, y coordinates
+            StdDraw.setPenColor(Color.orange);
+            StdDraw.setFont(smallFont);
+            StdDraw.text(p2.x, p2.y - 2, w.pronunication); //x, y coordinates
+        } else {
+            StdDraw.text(p2.x, p2.y, w.wordEnglish);
+        }
+        StdDraw.show();
         // success message?
     }
 
