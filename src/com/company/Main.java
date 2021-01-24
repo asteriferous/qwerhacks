@@ -13,6 +13,20 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+package qwerhacks;
+
+
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Main {
     public static final int WIDTH = 70;
     public static final int HEIGHT = 40;
@@ -128,7 +142,7 @@ public class Main {
             }
             indices.add(index);
             Point p = pointset.get(index);
-            StdDraw.text(p.x, p.y - 1, String.valueOf(index));
+            StdDraw.text(p.x, p.y - 1, String.valueOf(index)); //displays reference number of card ugly but it works
             StdDraw.text(p.x, p.y + 1, w.wordLanguage); //x, y coordinates
             StdDraw.setPenColor(Color.orange);
             StdDraw.setFont(smallFont);
@@ -144,7 +158,7 @@ public class Main {
             }
             indices.add(index);
             p = pointset.get(index);
-            StdDraw.text(p.x, p.y - 1, String.valueOf(index));
+            StdDraw.text(p.x, p.y - 1, String.valueOf(index)); //displays reference number of card ugly but it works
             StdDraw.text(p.x, p.y, w.wordEnglish);
             f = new flashcard(true, w);
             s.put(p, f);
@@ -284,14 +298,17 @@ public class Main {
                 int i = Character.getNumericValue(key); // pulls value of char key
                 System.out.println(i);
                 
-                Point p = pointset.get(i);
-                if (pointflashcard.get(p).solved) {
-                    continue;
+                if (i <= 7) {
+                
+	                Point p = pointset.get(i); //I removed the plus one because the value of index becomes too high
+	                if (pointflashcard.get(p).solved) {
+	                    continue;
+	                }
+	                updateFlashcard(p);
+	                cards[selectedCards] = p;
+	                selectedCards += 1;
+	                StdDraw.show();
                 }
-                updateFlashcard(p);
-                cards[selectedCards] = p;
-                selectedCards += 1;
-                StdDraw.show();
             }
 
 
